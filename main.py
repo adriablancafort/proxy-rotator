@@ -44,13 +44,18 @@ def scrape_amazon_product(ASIN: str, proxy_rotator: ProxyRotator) -> None:
     """Scrape the price of an Amazon product given its ASIN."""
 
     URL = f"https://www.amazon.com/dp/{ASIN}"
-    html = proxy_rotator.request_content(URL)
-    tree = HTMLParser(html)
 
-    captcha_title = tree.css_first("h4")
-    if captcha_title and "Enter the characters you see below" in captcha_title.text():
-        print(f"Error: CAPTCHA, URL: {URL}")
-        return
+    captcha_found = True
+    while captcha_found:
+        html = proxy_rotator.request_content(URL)
+        tree = HTMLParser(html)
+
+        captcha_title = tree.css_first("h4")
+        if captcha_title and "Enter the characters you see below" in captcha_title.text():
+            print(f"Error: CAPTCHA, URL: {URL}")
+            proxy_rotator.rotate_proxy()
+        else:
+            captcha_found = False
 
     title_element = tree.css_first("h1 span")
     price_symbol_element = tree.css_first("span.a-price-symbol")
