@@ -14,10 +14,11 @@ class ProxyRotator:
         response = requests.get("https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&proxy_format=protocolipport&format=text")
         return response.text.splitlines()
 
-    def rotate_proxy(self) -> str | None:
+    def rotate_proxy(self) -> None:
         """Select a new proxy from the list."""
 
-        self.current_proxy = random.choice(self.proxies) if self.proxies else None
+        if self.proxies:
+            self.current_proxy = random.choice(self.proxies)
 
     def request_content(self, URL: str) -> str:
         """Request the content of a URL and return it as a string."""
