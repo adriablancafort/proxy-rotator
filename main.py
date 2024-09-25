@@ -62,15 +62,15 @@ def scrape_amazon_product(ASIN: str, proxy_rotator: ProxyRotator) -> None:
     price_whole_element = tree.css_first("span.a-price-whole")
     price_fraction_element = tree.css_first("span.a-price-fraction")
 
-    PRODUCT_TITLE = title_element.text().strip() if title_element else "Title not found"
-    PRICE_SYMBOL = price_symbol_element.text() if price_symbol_element else "Symbol not found"
-    PRICE_WHOLE = price_whole_element.text().replace(".", "") if price_whole_element else "Whole part not found"
-    PRICE_FRACTION = price_fraction_element.text() if price_fraction_element else "Fraction not found"
+    product_title = title_element.text().strip() if title_element else "Title not found"
+    pryce_symbol = price_symbol_element.text() if price_symbol_element else "Symbol not found"
+    pryce_whole = price_whole_element.text().replace(".", "") if price_whole_element else "Whole part not found"
+    price_fraction = price_fraction_element.text() if price_fraction_element else "Fraction not found"
 
-    print(f"Product Title: {PRODUCT_TITLE}")
-    print(f"Price Symbol: {PRICE_SYMBOL}")
-    print(f"Price Whole: {PRICE_WHOLE}")
-    print(f"Price Fraction: {PRICE_FRACTION}")
+    print(f"Product Title: {product_title}")
+    print(f"Price Symbol: {pryce_symbol}")
+    print(f"Price Whole: {pryce_whole}")
+    print(f"Price Fraction: {price_fraction}")
 
 
 def main():
